@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .menu-card { border: none; border-radius: 15px; transition: 0.3s; overflow: hidden; }
+    .menu-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+    .btn-add-cart { background-color: #5d4037; color: white; border-radius: 20px; border: none; }
+    .btn-add-cart:hover { background-color: #4e342e; color: white; }
+    .price-tag { color: #5d4037; font-weight: bold; font-size: 1.2rem; }
+</style>
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h2 style="color: #5d4037;"><i class="fas fa-coffee me-2"></i>เมนูเครื่องดื่มและเบเกอรี่</h2>
+        <a href="/cart/" class="btn btn-outline-dark position-relative">
+            <i class="fas fa-shopping-cart"></i> ตะกร้าของฉัน
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {{ total_items }}
+            </span>
+        </a>
+    </div>
+
+    <div class="row g-4">
+        {% for product in products %}
+        <div class="col-md-3">
+            <div class="card h-100 menu-card shadow-sm">
+                <img src="/static/images/{{ product.1 }}.jpg" class="card-img-top" alt="{{ product.1 }}" style="height: 400px; object-fit: cover; width: 100%;">
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold">{{ product.1 }}</h5> <p class="card-text text-muted small">เมนูสดใหม่ พร้อมเสิร์ฟความอร่อยให้คุณ</p>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="price-tag">{{ product.2 }} ฿</span> <button class="btn btn-add-cart px-3 shadow-sm">
+                            <a href="{% url 'add_to_cart' product.0 %}" class="btn btn-add-cart px-3 shadow-sm">
+                                <i class="fas fa-plus"></i> สั่งเลย
+                            </a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <p class="text-muted">กำลังเตรียมเมนู... กรุณารอสักครู่</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

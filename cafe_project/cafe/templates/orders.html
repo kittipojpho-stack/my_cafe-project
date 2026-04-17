@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-brown"><i class="fas fa-history"></i> ประวัติการสั่งซื้อ (Sales History)</h2>
+        <a href="/" class="btn btn-outline-secondary">กลับหน้าหลัก</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>เลขที่ออเดอร์</th>
+                            <th>วันที่สั่งซื้อ</th>
+                            <th>ชื่อลูกค้า</th>
+                            <th>รายการสินค้า</th>
+                            <th>จำนวน</th>
+                            <th>ราคารวม</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td>#{{ order.0 }}</td> <td>{{ order.1 }}</td>  <td>{{ order.2 }}</td>  <td>{{ order.3 }}</td>  <td>{{ order.4 }}</td>  <td class="fw-bold text-success">{{ order.5 }} บาท</td> </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">ยังไม่มีประวัติการขายในระบบ</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

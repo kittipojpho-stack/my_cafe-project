@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+    <h2 class="mb-4">📜 ประวัติการขายทั้งหมด</h2>
+    <div class="table-responsive card shadow-sm">
+        <table class="table">
+    <thead>
+        <tr>
+            <th>เลขที่ออเดอร์</th> <th>วันที่/เวลา</th>   <th>รายการสินค้า</th>  <th>รหัสลูกค้า</th>     <th class="text-end">ยอดเงินรวม</th> </tr>
+    </thead>
+    <tbody>
+    {% for order in all_orders %}
+    <tr>
+        <td>#{{ order.id }}</td>  <td>{{ order.date|date:"d/m/Y H:i" }} น.</td> <td class="text-muted">{{ order.product_list }}</td> <td>{{ order.customer_name }}</td> <td class="text-end fw-bold">฿{{ order.total_money }}</td> </tr>
+    {% endfor %}
+</tbody>
+</table>
+    </div>
+</div>
+{% endblock %}

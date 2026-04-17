@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .cart-container { background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+    .product-img { width: 80px; height: 80px; object-fit: cover; border-radius: 12px; }
+    .btn-checkout { background-color: #5d4037; color: white; border-radius: 10px; width: 100%; padding: 12px; transition: 0.3s; }
+    .btn-checkout:hover { background-color: #4e342e; color: white; transform: scale(1.02); }
+    .quantity-control { max-width: 120px; }
+</style>
+
+<div class="container py-5">
+    <h2 class="text-brown mb-4"><i class="fas fa-shopping-basket me-2"></i>ตะกร้าสินค้าของคุณ</h2>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="cart-container p-4">
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr class="text-muted">
+                                <th colspan="2">สินค้า</th>
+                                <th>ราคา</th>
+                                <th>จำนวน</th>
+                                <th class="text-end">รวม</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in cart_items %}
+                            <tr>
+                                <td>
+                                    <img src="/static/images/{{ item.product_name }}.jpg" class="product-img" alt="{{ item.product_name }}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                                </td>
+                                <td>
+                                    <h6 class="mb-0 fw-bold">{{ item.product_name }}</h6>
+                                    <small class="text-muted">รหัสสินค้า: #{{ item.id }}</small>
+                                </td>
+                                <td>{{ item.price }} ฿</td>
+                                <td>
+                                <div class="input-group quantity-control">
+                                <a href="{% url 'decrease_cart' item.id %}" class="btn btn-outline-secondary btn-sm">-</a>
+                                <input type="text" class="form-control form-control-sm text-center" value="{{ item.quantity }}" readonly>
+                                <a href="{% url 'add_to_cart' item.id %}?next=cart" class="btn btn-outline-secondary btn-sm">+</a>
+                                </div>
+                                </td>
+                                <td class="text-end fw-bold">{{ item.total }} ฿</td>
+                                <td class="text-end">
+                                    <td class="text-end">
+                                        <a href="{% url 'remove_from_cart' item.id %}" class="btn text-danger">
+                                        <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center py-5">
+                                    <i class="fas fa-cart-arrow-down fa-3x text-muted mb-3"></i>
+                                    <p class="text-muted">ตะกร้าของคุณยังว่างเปล่า</p>
+                                    <a href="/menu/" class="btn btn-brown text-white" style="background-color: #5d4037;">ไปเลือกเมนูเลย</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="cart-container p-4">
+                <h5 class="fw-bold mb-4">สรุปคำสั่งซื้อ</h5>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>ราคารวม</span>
+                    <span>{{ subtotal }} ฿</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>ภาษี (7%)</span>
+                    <span>{{ tax }} ฿</span>
+                </div>
+                <hr>
+                <hr>
+                    <div class="d-grid gap-2 mt-4">
+                    <a href="{% url 'checkout' %}" class="btn btn-primary btn-lg w-100" style="background-color: #5d4037; border: none;">
+                ไปหน้าสั่งซื้อ
+                    </a>
+        </div>
+                <div class
+{% endblock %}
